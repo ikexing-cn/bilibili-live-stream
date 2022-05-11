@@ -19,7 +19,7 @@ func V2Initialization() {
 }
 
 func V2HandlerQualityUrl(quality int64, param map[string]string) {
-	param["quality"] = strconv.FormatInt(quality, 10)
+	param["qn"] = strconv.FormatInt(quality, 10)
 	result := GetRequest(V2API, param)
 	temp := gjson.Get(result, "data.playurl_info.playurl.stream.0.format.0.codec.0").String()
 	baseUrl := gjson.Get(temp, "base_url").String()
