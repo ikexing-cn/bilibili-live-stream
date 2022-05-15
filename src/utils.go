@@ -12,6 +12,13 @@ import (
 	"strings"
 )
 
+func GetPotplayerAddress() string {
+	fmt.Println("请输入Potplayer应用路径，如E:\\PotPlayer\\PotPlayerMini64.exe")
+	var Address string
+	_, _ = fmt.Scanln(&Address)
+	return Address
+}
+
 func GetRealRoomID() int64 {
 	fmt.Println("请输入BiliBili直播间房间号：")
 	var roomID string

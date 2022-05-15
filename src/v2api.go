@@ -3,22 +3,24 @@ package bili_live_stream
 import (
 	"fmt"
 	"github.com/tidwall/gjson"
+	"os/exec"
 	"strconv"
 )
 
 const V2API string = "https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo"
 
 func V2Initialization() {
+	potplayerAddress := GetPotplayerAddress()
 	realRoomID := GetRealRoomID()
 	if realRoomID == -1 {
 		V2FormatInit()
 	}
 	param := map[string]string{"platform": "h5", "protocol": "0", "format": "0,1,2", "codec": "0", "room_id": strconv.FormatInt(realRoomID, 10)}
 	quality := GetChooseQuality(param, "data.playurl_info.playurl.g_qn_desc", V2API)
-	V2HandlerQualityUrl(quality, param)
+	V2HandlerQualityUrl(quality, param, potplayerAddress)
 }
 
-func V2HandlerQualityUrl(quality int64, param map[string]string) {
+func V2HandlerQualityUrl(quality int64, param map[string]string, potplayerAddress string) {
 	param["qn"] = strconv.FormatInt(quality, 10)
 	result := GetRequest(V2API, param)
 	temp := gjson.Get(result, "data.playurl_info.playurl.stream.0.format.0.codec.0").String()
@@ -30,6 +32,9 @@ func V2HandlerQualityUrl(quality int64, param map[string]string) {
 
 	fmt.Println("视频地址如下：")
 	fmt.Println(realUrl)
+
+	cmd := exec.Command(potplayerAddress, "potplayer://"+realUrl)
+	cmd.Run()
 
 	IsOutput(realUrl)
 }
