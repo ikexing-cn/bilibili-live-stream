@@ -1,4 +1,4 @@
-package main
+package bili_live_stream
 
 import (
 	"fmt"
@@ -13,7 +13,8 @@ func V1Initialization() {
 	if realRoomID == -1 {
 		V1FormatInit()
 	}
-	param := map[string]string{"cid": strconv.FormatInt(realRoomID, 10), "platform": "h5"}
+	println(strconv.FormatInt(realRoomID, 10))
+	param := map[string]string{"cid": strconv.FormatInt(realRoomID, 10), "platform": "hls"}
 	V1HandlerQualityUrl(GetChooseQuality(param, "data.quality_description", V1API), param)
 }
 
@@ -40,7 +41,7 @@ func V1HandlerQualityUrl(qn int64, param map[string]string) {
 		content += urls[url] + "\n"
 	}
 
-	isOutput(content)
+	IsOutput(content)
 }
 
 func V1FormatInit() {

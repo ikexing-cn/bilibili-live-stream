@@ -1,4 +1,4 @@
-package main
+package bili_live_stream
 
 import (
 	"fmt"
@@ -67,7 +67,7 @@ func IsExists(path string) bool {
 	return true
 }
 
-func isOutput(content string) {
+func IsOutput(content string) {
 	fmt.Println("是否需要输出到文件？(输入任意键执行，输入n取消)")
 	var isOutput string
 	_, _ = fmt.Scanln(&isOutput)
@@ -106,6 +106,7 @@ func GetRequest(address string, params map[string]string) string {
 	Url.RawQuery = paramsTemp.Encode()
 
 	client := &http.Client{}
+	println(Url.String())
 	req, err := http.NewRequest("GET", Url.String(), strings.NewReader(""))
 	if err != nil {
 		log.Println(err)

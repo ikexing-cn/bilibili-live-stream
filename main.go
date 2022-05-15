@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	biliLiveStream "bilibili-live-stream/src"
+	"fmt"
+)
 
 func main() {
 	fmt.Println("请输入API类型: ")
@@ -9,8 +12,8 @@ func main() {
 	var apiType int
 	_, _ = fmt.Scanln(&apiType)
 	if apiType == 1 {
-		V1Initialization()
+		biliLiveStream.V1Initialization()
 	} else {
-		V2Initialization()
+		biliLiveStream.V2Initialization()
 	}
 }
