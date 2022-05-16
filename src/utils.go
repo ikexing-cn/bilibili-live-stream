@@ -99,7 +99,6 @@ func IsOpenBrowser(url string) bool {
 
 func OpenBrowser(content string) error {
 	cmd := exec.Command(commands[runtime.GOOS], "potplayer://"+content)
-	println("potplayer://" + content)
 	return cmd.Start()
 }
 
