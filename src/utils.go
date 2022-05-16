@@ -9,8 +9,16 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 )
+
+var commands = map[string]string{
+	"windows": "start",
+	"darwin":  "open",
+	"linux":   "xdg-open",
+}
 
 func GetRealRoomID() int64 {
 	fmt.Println("请输入BiliBili直播间房间号：")
@@ -68,15 +76,31 @@ func IsExists(path string) bool {
 }
 
 func IsOutput(content string) {
-	fmt.Println("是否需要输出到文件？(输入任意键执行，输入n取消)")
+	fmt.Println("自动打开失败，请手动导入。")
+	fmt.Println("是否将链接手动输出？(输入任意键执行，输入n取消)")
 	var isOutput string
 	_, _ = fmt.Scanln(&isOutput)
 	if isOutput != "n" {
 		WriteString(content)
 		fmt.Println("写入完成")
 	}
+}
 
-	_, _ = fmt.Scanln()
+func IsOpenBrowser(url string) bool {
+	fmt.Println("是否使用自动打开文件？(输入任意键执行，输入n取消)")
+	var isOpen string
+	_, _ = fmt.Scanln(&isOpen)
+	if isOpen != "n" {
+		ok := OpenBrowser(url)
+		return ok == nil
+	}
+	return true
+}
+
+func OpenBrowser(content string) error {
+	cmd := exec.Command(commands[runtime.GOOS], "potplayer://"+content)
+	println("potplayer://" + content)
+	return cmd.Start()
 }
 
 func WriteString(content string) {

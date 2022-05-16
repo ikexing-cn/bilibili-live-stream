@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/tidwall/gjson"
 	"strconv"
+	"strings"
 )
 
 const V1API string = "https://api.live.bilibili.com/xlive/web-room/v1/playUrl/playUrl"
@@ -41,7 +42,11 @@ func V1HandlerQualityUrl(qn int64, param map[string]string) {
 		content += urls[url] + "\n"
 	}
 
-	IsOutput(content)
+	println("输出" + strings.Split(content, "\n")[0])
+
+	if !IsOpenBrowser(strings.Split(content, "\n")[0]) {
+		IsOutput(content)
+	}
 }
 
 func V1FormatInit() {

@@ -31,7 +31,9 @@ func V2HandlerQualityUrl(quality int64, param map[string]string) {
 	fmt.Println("视频地址如下：")
 	fmt.Println(realUrl)
 
-	IsOutput(realUrl)
+	if !IsOpenBrowser(realUrl) {
+		IsOutput(realUrl)
+	}
 }
 
 func V2FormatInit() {
