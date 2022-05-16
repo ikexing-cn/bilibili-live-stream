@@ -106,7 +106,6 @@ func GetRequest(address string, params map[string]string) string {
 	Url.RawQuery = paramsTemp.Encode()
 
 	client := &http.Client{}
-	println(Url.String())
 	req, err := http.NewRequest("GET", Url.String(), strings.NewReader(""))
 	if err != nil {
 		log.Println(err)
